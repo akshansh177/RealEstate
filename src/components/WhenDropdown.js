@@ -1,23 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react';
-
+import React, { useState, useContext } from 'react';
 // import icons
-import {
-  RiWallet3Line,
-  RiArrowDownSLine,
-  RiArrowUpSLine,
-} from 'react-icons/ri';
+import { RiHome5Line, RiArrowDownSLine, RiArrowUpSLine } from 'react-icons/ri';
 // import headless ui components
 import { Menu } from '@headlessui/react';
 // import context
 import { HouseContext } from './HouseContext';
-
-const PriceRangeDropdown = () => {
-  const { price, setPrice } = useContext(HouseContext);
-  const [isOpen, setIsOpen] = useState(false);
-
-  const prices = [
+const year = [
     {
-      value: 'Price',
+      value: 'Price range (any)',
     },
     {
       value: '100000 - 130000',
@@ -38,16 +28,19 @@ const PriceRangeDropdown = () => {
       value: '30000 - 40000',
     },
   ];
-
+const WhenDropdown = () => {
+  const { year, setProperty, properties } = useContext(HouseContext);
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <Menu as='div' className='dropdown relative'>
       <Menu.Button
         onClick={() => setIsOpen(!isOpen)}
-        className='dropdown-btn w-full'
+        className='dropdown-btn w-full text-left'
       >
-        <RiWallet3Line className='dropdown-icon-primary' />
         <div>
-          <div className='text-[15px] font-medium leading-tight'>${price}</div>
+          <div className='text-[15px] font-medium leading-tight'>
+            Move in Date
+          </div>
         </div>
         {isOpen ? (
           <RiArrowUpSLine className='dropdown-icon-secondary' />
@@ -57,15 +50,15 @@ const PriceRangeDropdown = () => {
       </Menu.Button>
 
       <Menu.Items className='dropdown-menu'>
-        {prices.map((price, index) => {
+        {properties.map((year, index) => {
           return (
             <Menu.Item
               as='li'
-              onClick={() => setPrice(price.value)}
+              onClick={() => setProperty(year.value)}
               key={index}
               className='cursor-pointer hover:text-violet-700 transition'
             >
-              ${price.value}
+              {year.value}
             </Menu.Item>
           );
         })}
@@ -74,4 +67,4 @@ const PriceRangeDropdown = () => {
   );
 };
 
-export default PriceRangeDropdown;
+export default WhenDropdown;
